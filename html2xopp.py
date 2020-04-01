@@ -3,6 +3,7 @@ from html.parser import HTMLParser
 # conda install -c conda-forge svglib 
 # from svglib.svglib import svg2rlg
 from os import path
+import sys
 import numpy as np
 #import re
 import gzip
@@ -54,25 +55,31 @@ class SVGParser(HTMLParser):
             fo.write('</stroke>\n')
 
 
-#parser.feed('<object data="2019-11-21_spr_meeting_page001.svg" type="image/svg+xml" width="757" height="1316"></object>')
-#drawing = svg2rlg("examples/2019-11-21_spr_meeting_page001.svg")
-#<object data="2019-11-21_spr_meeting_page001.svg" type="image/svg+xml" width="757" height="1316"></object>
-#<object data="2019-11-21_spr_meeting_page002.svg" type="image/svg+xml" width="1240" height="1755"></object>
+if len(sys.argv) != 3:
+    print('Usage:')
+    print('python html2xopp.py input.html outputDir')
 
-htmlFileName = 'examples/2019-11-21_spr_meeting.html'
+
+htmlFileName = sys.argv[1] # 'examples/2019-11-21_spr_meeting.html'
 pathName = path.dirname(htmlFileName)
+xoppDirName = sys.argv[2]
+xoppBaseName = path.basename(htmlFileName)[:-5]+'.xopp'
+xoppFileName = path.join(xoppDirName, xoppBaseName)
 
 svgParser = SVGParser()
 mainParser = MainHTMLParser(svgParser, pathName)
 
-fo = gzip.open('2019-11-21_spr_meeting.xopp', 'wt')
+fo = gzip.open(xoppFileName, 'wt') # '2019-11-21_spr_meeting.xopp'
 
 # print hardcoded header
 fo.write('<?xml version="1.0" standalone="no"?>\n')
 fo.write('<xournal creator="Xournal++ 1.0.13" fileversion="4">\n')
 fo.write('<title>Xournal++ document - see https://github.com/xournalpp/xournalpp</title>\n')
-fi = open('examples/2019-11-21_spr_meeting.html', "r")
+fi = open(htmlFileName, "r")
 mainParser.feed(fi.read())
 fi.close()
 fo.write('</xournal>\n')
 fo.close()
+
+# TODO:
+# Did not work on '~/MEGA/styluslabs/write/2020-01-24 Open AI Lab.html'
