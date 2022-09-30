@@ -5,14 +5,14 @@ from PIL import Image
 from tempfile import gettempdir # for temp directory (obviously)
 from random import randint # for temp file name
 
-def imgs2longimg(png_paths: list[str], output_path: str, max_width: int=None, 
+def imgs2longimg(img_paths: list[str], output_path: str, max_width: int=None, 
                 max_height: int=None, background: str=None):
     """Connecting multiple images to one long image. 
     This is a stripped down version of a function which is hosted at:
     https://github.com/OsiPog/bogdan-tools
 
     Args:
-        png_paths (list[str]): A list of all input-image paths.
+        img_paths (list[str]): A list of all input-image paths.
         output_path (str): The file path of the long output-image.
         max_width (int, optional): Scale the image down if value exceeded.
         max_height (int, optional): Scale the image down if value exceeded.
@@ -23,7 +23,7 @@ def imgs2longimg(png_paths: list[str], output_path: str, max_width: int=None,
     long_width: int = 0 
     # all heights all added up
     long_height: int = 0
-    for png_path in png_paths:
+    for png_path in img_paths:
         try:
             image = Image.open(png_path, "r")
 
@@ -65,7 +65,7 @@ def imgs2longimg(png_paths: list[str], output_path: str, max_width: int=None,
 
 
 def main():
-    if len(sys.argv) != 3:
+    if len(sys.argv) < 3:
         print("""Usage: python xopp2longimg.py output-file input-file.xopp [options]
 (The output-file can by any image-like file type.)
     Options:
