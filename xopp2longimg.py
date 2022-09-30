@@ -9,7 +9,7 @@ def imgs2longimg(img_paths: list[str], output_path: str, max_width: int=None,
                 max_height: int=None, background: str=None):
     """Connecting multiple images to one long image. 
     This is a stripped down version of a function which is hosted at:
-    https://github.com/OsiPog/bogdan-tools
+    https://github.com/OsiPog/bogdan-tools/blob/master/imgs2longimg.py
 
     Args:
         img_paths (list[str]): A list of all input-image paths.
