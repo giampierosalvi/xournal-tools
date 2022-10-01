@@ -46,10 +46,6 @@ def imgs2longimg(img_paths: list[str], output_path: str, max_width: int=None,
         # each other
         paste_offset = (MIDDLE_X - round(image.size[0]/2), current_height)
         
-        # This is faster than alpha_composite but has an unwanted side effect
-        # when using a background colour and an image with alpha pixels, 
-        # I personally won't have images with alpha pixels inside so I chose 
-        # speed here.
         long_image.paste(image, paste_offset)
         
         current_height += image.size[1]
